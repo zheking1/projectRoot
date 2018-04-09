@@ -39,7 +39,7 @@ public class CaptchaController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/getCaptcha", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCaptcha.do", method = RequestMethod.GET)
     public String getCapcha(Model model) {
         model.addAttribute("timestamp", System.currentTimeMillis());
         return "captcha";
@@ -55,7 +55,7 @@ public class CaptchaController {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/getCaptchaImage", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCaptchaImage.do", method = RequestMethod.GET)
     public ModelAndView getCaptchaImage(Model model, HttpServletRequest request, HttpServletResponse response,
                                         @RequestParam(value = "timestamp", required = false) String timestamp) throws IOException {
         if (StringUtils.isEmpty(timestamp)) {
@@ -92,7 +92,7 @@ public class CaptchaController {
      * @param request
      * @return true或fasle, ture表示验证成功, false表示验证失败
      */
-    @RequestMapping(value = "/checkCaptcha", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkCaptcha.do", method = RequestMethod.POST)
     @ResponseBody
     public String checkCaptcha(@RequestParam(value = "timestamp", required = false) String timestamp, @RequestParam(value = "code", required = false) String code, HttpServletRequest request) {
         boolean returnStr = false;

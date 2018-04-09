@@ -4,7 +4,7 @@
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
 <mapper namespace="com.chatRoBot.dao.UserDao">
 
-    <select id="selectUser" resultType="User" parameterType="String">
+    <select id="selectUser" resultType="com.chatRoBot.model.User" parameterType="String">
         SELECT * FROM user_v WHERE username = #{username}
     </select>
 

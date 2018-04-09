@@ -24,7 +24,7 @@ public class CaptchaImageCreateController {
         this.captchaProducer = captchaProducer;
     }
 
-    @RequestMapping("/captcha-image")
+    @RequestMapping("/captcha-image.do")
 
     public ModelAndView handleRequest
             (HttpServletRequest request, HttpServletResponse response) throws Exception {

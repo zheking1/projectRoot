@@ -1,17 +1,17 @@
 // /**
 //  * Created by Asus on 2018/3/29.
 //  */
-$("#noUserName").hide();
-$("#noPassword").hide();
 function usernameChacke() {
+    var context =$("#contextPath").val();
     var username = $("#inputUsernamel3").val();
-    if (usernaem.length < 6) {
-        $("#noUserName").show();
+    if (username.length < 6) {
+        $("#message").show();
+        $("#warning").text("用户名错误，请重新输入。");
         return false;
     }
     $.ajax({
         type: "POST",
-        url: "${pageContext.request.contextPath }/check/usernameCheck",//请求的后台地址
+        url: context +"/check/usernameCheck.do",//请求的后台地址
         data: "username=" + username,//前台传给后台的参数
         success: function (msg) {//msg:返回值
             var data = JSON.parse(msg).msg;
@@ -59,29 +59,65 @@ function clickeBut() {
     //验证码
     var imageContent = $("#imageContent").val().trim();
     if (userName.length == 0) {
-        $("#message").text("请输入帐号");
+        $("#message").show();
+        $("#warning").text("请输入帐号");
         return false;
     }
 //  console.log(password);
 
     if (password.length == 0) {
-        $("#message").text("请输入密码");
+        $("#message").show();
+        $("#warning").text("请输入密码");
         return false;
     }
     if (imageContent.length == 0) {
-        $("#message").text("请输入验证码");
+        $("#message").show();
+        $("#warning").text("请输入验证码");
         return false;
     } else if (imageContent.length < 4) {
-        $("#message").text("验证码错误");
+        $("#message").show();
+        $("#warning").text("验证码错误");
         return false;
     }
+    var context =$("#contextPath").val();
     usernameChacke();
+    if(checkImageCode(imageContent) != true){
+        $("#message").show();
+        $("#warning").text("验证码错误");
+        return false;
+    }
+
+    $.ajax({
+        type:"post",
+        url:  context + '/user/login.do',
+        data:"username="+userName+"&password="+ password,
+        processData: false,
+        success: function (msg) {
+            var data = JSON.parse(msg).msg;
+            if (data == 1) {
+                $("#message").className="alert alert-success";
+                $("#warning").text("登陆成功,即将跳转");
+                $("#message").show();
+                window.location.href=context+"/user/getRole.do?username="+userName;
+                //window.setTimeout("window.location="+context+"/user/getRole.do",2000);
+            }else{
+                $("#message").show();
+                $("#warning").text("密码错误！");
+            }
+        },
+        error:function(){
+            alert(3);
+            $("#message").show();
+            $("#warning").text("服务器出错！");
+        }
+    });
 
 }
 /**
  * 验证码校验
  */
 function checkImageCode(s) {
+    var context =$("#contextPath").val();
     //验证码
     var code = s.trim();
     var timestamp = $("#timestamp").val().trim();
@@ -92,7 +128,7 @@ function checkImageCode(s) {
         $.ajax({
             type: 'post',
             async: false,
-            url: '${pageContext.request.contextPath }/check/checkCaptcha',
+            url: context+'/captcha/checkCaptcha.do',
             data: {
                 "code": code
             },
@@ -101,18 +137,18 @@ function checkImageCode(s) {
             }
         });
         if (status.indexOf("true") >= 0) {
-            document.getElementById("imgObj111").style.display = "block";
             $("#imagCheck").val("true");
             $("#message").text("");
             boo = true;
         } else {
             changeImg();
-            document.getElementById("imgObj111").style.display = "none";
-            $("#message").text("验证码错误");
+            $("#message").show();
+            $("#warning").text("验证码错误");
             return false;
         }
     } else {
-        $("#message").text("请输入验证码");
+        $("#message").show();
+        $("#warning").text("请输入验证码");
         return;
     }
     return boo;
@@ -120,7 +156,8 @@ function checkImageCode(s) {
 //密码检查
 function passwordChacke() {
     if ($("#noPassword").length < 6) {
-        $("#noPassword").show();
+        $("#message").show();
+        $("#warning").text("密码错误。");
         return false;
     }
 }
@@ -128,8 +165,5 @@ function passwordChacke() {
  关闭警告
  */
 function closeUsernameWarning() {
-    $("#noUserName").hide();
-}
-function closePasswordWraning() {
-    $("#noPassword").hide();
+    $("#message").hide();
 }

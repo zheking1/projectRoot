@@ -29,9 +29,9 @@ public class checkCotroller {
     /**
      * @param username
      */
-    @RequestMapping(value = "/usernameCheck", method = RequestMethod.POST)
+    @RequestMapping(value = "/usernameCheck.do", method = RequestMethod.POST)
     @ResponseBody
-    public String userNameCheck(@RequestParam(value = "username", required = false) String username) throws IOException {
+    public String usernameCheck(@RequestParam(value = "username", required = false) String username) throws IOException {
         User user = this.userService.selectUser(username);
         Map<String, String> map = new HashMap<String, String>();
         if (user != null) {

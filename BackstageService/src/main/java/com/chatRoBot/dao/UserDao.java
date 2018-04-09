@@ -4,6 +4,6 @@ import com.chatRoBot.model.User;
 
 public interface UserDao {
 
-    User selectUser(String id);
+    User selectUser(String username);
 
 }
