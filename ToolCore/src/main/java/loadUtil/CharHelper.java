@@ -246,7 +246,6 @@ public class CharHelper {
 		StringBuffer result = new StringBuffer();
 
 		for (int i = 0; i < text.length(); i++) {
-
 			char c = text.charAt(i);
 			if (c >= 0 && c <= 255) {
 				result.append(c);
