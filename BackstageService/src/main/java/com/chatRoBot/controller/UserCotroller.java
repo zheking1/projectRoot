@@ -5,6 +5,7 @@ import com.chatRoBot.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +27,7 @@ public class UserCotroller {
      * @param password
      * @return
      */
-    @RequestMapping("/login.do")
+    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
     public String login(@RequestParam(value="username", required = false) String username,
                         @RequestParam(value="password", required = false) String password ) throws IOException {
@@ -44,9 +45,10 @@ public class UserCotroller {
      * @param username
      * @return
      */
-    @RequestMapping(value = "/getRole.do")
-    public String getRole(@RequestParam("username") String username){
-        return "/chatRoBot/backstageServiceMain";
+    @RequestMapping(value = "/getRole.do" , method = RequestMethod.POST)
+    public ModelAndView getRole(@RequestParam("username") String username){
+        System.out.println(username);
+        return new ModelAndView("redirect:/chatRoBot/backstageServiceMain");
     }
 
 }

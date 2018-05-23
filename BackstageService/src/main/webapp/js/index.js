@@ -79,13 +79,13 @@ function clickeBut() {
         $("#warning").text("验证码错误");
         return false;
     }
-    var context =$("#contextPath").val();
     usernameChacke();
     if(checkImageCode(imageContent) != true){
         $("#message").show();
         $("#warning").text("验证码错误");
         return false;
     }
+    var context =$("#contextPath").val();
 
     $.ajax({
         type:"post",
@@ -98,15 +98,17 @@ function clickeBut() {
                 $("#message").className="alert alert-success";
                 $("#warning").text("登陆成功,即将跳转");
                 $("#message").show();
-                window.location.href=context+"/user/getRole.do?username="+userName;
-                //window.setTimeout("window.location="+context+"/user/getRole.do",2000);
+                $.ajax({
+                    type:"post",
+                    url:  context + '/user/getRole.do',
+                    data:"username="+userName
+                });
             }else{
                 $("#message").show();
                 $("#warning").text("密码错误！");
             }
         },
         error:function(){
-            alert(3);
             $("#message").show();
             $("#warning").text("服务器出错！");
         }
