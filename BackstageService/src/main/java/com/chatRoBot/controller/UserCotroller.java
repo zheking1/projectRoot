@@ -42,13 +42,15 @@ public class UserCotroller {
         return mapper.writeValueAsString(map);
     }
     /**
-     * @param username
+     * @param   username
      * @return
      */
     @RequestMapping(value = "/getRole.do" , method = RequestMethod.POST)
-    public ModelAndView getRole(@RequestParam("username") String username){
-        System.out.println(username);
-        return new ModelAndView("redirect:/chatRoBot/backstageServiceMain");
+    public ModelAndView getRole(@RequestParam(value="username", required = false) String username){
+        System.out.println(1111);
+        ModelAndView model = new ModelAndView();
+        model.setViewName("chatRoBot/backstageServiceMain");
+        return model;
     }
 
 }

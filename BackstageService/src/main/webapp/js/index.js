@@ -80,13 +80,14 @@ function clickeBut() {
         return false;
     }
     usernameChacke();
+    if(!passwordChacke())return false;
     if(checkImageCode(imageContent) != true){
         $("#message").show();
         $("#warning").text("验证码错误");
         return false;
     }
     var context =$("#contextPath").val();
-
+alert(1);
     $.ajax({
         type:"post",
         url:  context + '/user/login.do',
@@ -94,6 +95,7 @@ function clickeBut() {
         processData: false,
         success: function (msg) {
             var data = JSON.parse(msg).msg;
+            alert(data);
             if (data == 1) {
                 $("#message").className="alert alert-success";
                 $("#warning").text("登陆成功,即将跳转");
@@ -101,9 +103,16 @@ function clickeBut() {
                 $.ajax({
                     type:"post",
                     url:  context + '/user/getRole.do',
-                    data:"username="+userName
+                    data:"username="+userName,
+                    success:function(msg1){
+                        alert(msg1);
+                    },
+                    error:function(msg1){
+                        alert(msg1);
+                    }
                 });
             }else{
+                alert(1);
                 $("#message").show();
                 $("#warning").text("密码错误！");
             }
@@ -157,11 +166,11 @@ function checkImageCode(s) {
 }
 //密码检查
 function passwordChacke() {
-    if ($("#noPassword").length < 6) {
+    if ($("#inputPassword3").val().trim().length < 6) {
         $("#message").show();
         $("#warning").text("密码错误。");
         return false;
-    }
+    }else return true;
 }
 /*
  关闭警告
