@@ -4,8 +4,12 @@
 
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath }/js/index.js"></script>
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="${pageContext.request.contextPath }/js/index.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,34 +27,32 @@
                     <form class="form-horizontal" id="form" role="form"
                           action="${pageContext.request.contextPath }/user/login.do" method="post">
                         <div class="form-group">
-                            <label for="inputUsernamel3" class="col-sm-2 control-label">用户名</label>
+                            <label class="col-sm-2 control-label">用户名</label>
                             <div class="col-sm-4">
-                                <input type="text" name="username" onblur="usernameChacke()"
-                                       onclick="closeUsernameWarning()" class="form-control" id="inputUsernamel3"/>
+                                <input type="text" name="username" class="form-control" />
                             </div>
 
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                            <label class="col-sm-2 control-label">密码</label>
                             <div class="col-sm-4">
-                                <input type="password" name="password"
-                                       onblur="passwordChacke()" class="form-control" id="inputPassword3"/>
+                                <input type="password" name="password" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="imageContent" class="col-sm-2 control-label">验证码</label>
+                            <img id="imgObj" style="float: left;margin-left: 20px;" alt="验证码" title="点击更换"
+                                 src="${pageContext.request.contextPath }/captcha/getCaptchaImage.do"
+                                 onclick="changeImg()">
                             <div class="col-sm-4">
                                 <input id="imageContent" style="width:120px; float: left;" name="imageContent"
                                        type="text" placeholder="验证码" maxlength="4" class="form-control">
-                                <img id="imgObj" style="float: left;margin-left: 20px;" alt="验证码"
-                                     src="${pageContext.request.contextPath }/captcha/getCaptchaImage.do"
-                                     onclick="changeImg()">
                             </div>
                             <input id="timestamp" name="timestamp" value="${timestamp }" type="hidden">
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" onclick="clickeBut()" class="btn btn-default">登陆</button>
+                                <button type="submit" name="submit" id="login_from" class="btn btn-primary">登陆</button>
                                 <div id="message" class="alert alert-warning" style="display: none; ">
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
                                     <strong>警告！</strong><span id="warning"></span>

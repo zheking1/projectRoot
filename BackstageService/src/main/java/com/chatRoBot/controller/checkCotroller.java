@@ -29,17 +29,16 @@ public class checkCotroller {
     /**
      * @param username
      */
-    @RequestMapping(value = "/usernameCheck.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/usernameCheck.do", method = RequestMethod.GET)
     @ResponseBody
-    public String usernameCheck(@RequestParam(value = "username", required = false) String username) throws IOException {
+    public Map usernameCheck(@RequestParam(value = "username", required = false) String username) throws IOException {
         User user = this.userService.selectUser(username);
         Map<String, String> map = new HashMap<String, String>();
         if (user != null) {
-            map.put("msg", "1");
+            map.put("valid", "true");
         } else {
-            map.put("msg", "2");
+            map.put("valid", "false");
         }
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(map);
+        return map;
     }
 }

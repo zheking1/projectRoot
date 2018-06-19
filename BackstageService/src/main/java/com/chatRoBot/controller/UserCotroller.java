@@ -33,7 +33,8 @@ public class UserCotroller {
                         @RequestParam(value="password", required = false) String password ) throws IOException {
         User user = this.userService.selectUser(username);
         Map<String, String> map = new HashMap<String, String>();
-        if (password.equals(user.getPassword())) {
+        if (user != null && password.equals(user.getPassword())) {
+
             map.put("msg", "1");
         } else {
             map.put("msg", "2");
@@ -49,7 +50,7 @@ public class UserCotroller {
     public ModelAndView getRole(@RequestParam(value="username", required = false) String username){
         System.out.println(1111);
         ModelAndView model = new ModelAndView();
-        model.setViewName("chatRoBot/backstageServiceMain");
+        model.setViewName("/backstageServiceMain.jsp");
         return model;
     }
 
